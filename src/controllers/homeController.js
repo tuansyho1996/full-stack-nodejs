@@ -18,8 +18,13 @@ let postCrud = async (req, res) => {
     console.log(message)
     return res.redirect('/')
 }
+let displayGetCRUD = async (req, res) => {
+    let users = await CRUDServices.getUsers();
+    res.render('displayUsers.ejs', { data: users });
+}
 module.exports = {
     getHomePage,
     getCrudPage,
-    postCrud
+    postCrud,
+    displayGetCRUD
 }
