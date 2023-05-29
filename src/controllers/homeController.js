@@ -22,9 +22,20 @@ let displayGetCRUD = async (req, res) => {
     let users = await CRUDServices.getUsers();
     res.render('displayUsers.ejs', { data: users });
 }
+let getEditUserCRUD = async (req, res) => {
+    const user = await CRUDServices.findUserEdit(req.query.id);
+    res.render('editUserPage.ejs', { user: user })
+}
+let putEditUserCRUD = async (req, res) => {
+    const user = req.body;
+    let statusUdateUser = await CRUDServices.handleEditUSer(user);
+    return res.redirect('/display-crud')
+}
 module.exports = {
     getHomePage,
     getCrudPage,
     postCrud,
-    displayGetCRUD
+    displayGetCRUD,
+    getEditUserCRUD,
+    putEditUserCRUD
 }

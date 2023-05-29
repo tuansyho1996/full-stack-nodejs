@@ -49,7 +49,48 @@ let getUsers = () => {
         }
     })
 }
+let findUserEdit = (id) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+
+            const user = db.User.findOne({ where: { id: id } });
+            if (user) {
+                resovle(user);
+            }
+            else {
+                resovle({});
+            }
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
+let handleEditUSer = (user) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            await db.User.update(
+                {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    address: user.address
+                },
+                {
+                    where: {
+                        id: user.id
+                    }
+                }
+            )
+            resovle('update user succeed');
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
 module.exports = {
     createNewUser,
     getUsers,
+    findUserEdit,
+    handleEditUSer
 }
