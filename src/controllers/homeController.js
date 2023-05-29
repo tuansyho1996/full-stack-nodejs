@@ -31,11 +31,17 @@ let putEditUserCRUD = async (req, res) => {
     let statusUdateUser = await CRUDServices.handleEditUSer(user);
     return res.redirect('/display-crud')
 }
+let getDeleteUserCRUD = async (req, res) => {
+    const statusDeleteUser = await CRUDServices.handleDeleteUser(req.query.id);
+    // req.fresh
+    res.redirect('/display-crud')
+}
 module.exports = {
     getHomePage,
     getCrudPage,
     postCrud,
     displayGetCRUD,
     getEditUserCRUD,
-    putEditUserCRUD
+    putEditUserCRUD,
+    getDeleteUserCRUD
 }

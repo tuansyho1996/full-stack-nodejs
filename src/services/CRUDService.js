@@ -88,9 +88,21 @@ let handleEditUSer = (user) => {
         }
     })
 }
+let handleDeleteUser = (id) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            await db.User.destroy({ where: { id: id } });
+            resovle('Delete user succeed');
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
 module.exports = {
     createNewUser,
     getUsers,
     findUserEdit,
-    handleEditUSer
+    handleEditUSer,
+    handleDeleteUser
 }
