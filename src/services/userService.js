@@ -24,7 +24,6 @@ let handleLoginUser = (email, password) => {
                 }
                 else {
                     let isPassword = await bcrypt.compareSync(password, user.password);
-                    console.log('check isPassword', isPassword);
                     delete user.password;
                     if (isPassword) {
                         userData.errorCode = 0;
