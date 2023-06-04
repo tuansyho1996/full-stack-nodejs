@@ -52,7 +52,30 @@ let checkEmailUser = async (emailUser) => {
         return false
     }
 }
+let handleGetUser = (userId) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            let user = ''
+            if (userId && userId !== 'ALL') {
+                user = await db.User.findOne({
+                    where: { id: userId }
+                })
+            }
+            if (userId && userId === 'ALL') {
+                user = await db.User.findAll({
+
+                })
+            }
+            resovle(user)
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+
+}
 
 module.exports = {
-    handleLoginUser
+    handleLoginUser,
+    handleGetUser
 }
