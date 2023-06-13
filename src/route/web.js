@@ -1,6 +1,7 @@
 import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
+import allcodeController from "../controllers/allcodeController";
 
 
 let router = express.Router();
@@ -19,6 +20,9 @@ let initWebRoutes = (app) => {
     router.post('/api/create-new-user', userController.createNewUser);
     router.put('/api/edit-user', userController.editUser);
     router.delete('/api/delete-user', userController.deleteUser);
+
+    router.get('/api/get-allcode', allcodeController.getAllcode)
+
     return app.use('/', router)
 }
 
