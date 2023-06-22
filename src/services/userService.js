@@ -64,7 +64,6 @@ let handleGetUser = (userId) => {
             }
             if (userId && userId === 'ALL') {
                 user = await db.User.findAll({
-
                 })
             }
             resovle(user)
@@ -106,7 +105,9 @@ let handleCreateNewUser = (data) => {
                     gender: data.gender,
                     roleId: data.role,
                     phonenumber: data.phonenumber,
-                    password: hashPassword
+                    positionId: data.position,
+                    password: hashPassword,
+                    image: data.avatar
                 })
                 resolve({
                     errorCode: 0,

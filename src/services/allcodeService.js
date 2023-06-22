@@ -2,7 +2,6 @@ import db from '../models/index.js'
 
 let handleGetAllcode = (type) => {
     return new Promise(async (resolve, reject) => {
-
         try {
             if (type === 'all') {
                 let res = await db.Allcode.findAll()
