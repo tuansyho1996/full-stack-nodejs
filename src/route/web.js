@@ -24,6 +24,10 @@ let initWebRoutes = (app) => {
 
     router.get('/api/get-allcode', allcodeController.getAllcode);
     router.get('/api/get-top-doctor-homepage', doctorController.getTopDoctorHomepage);
+    router.get('/api/get-doctor-select', doctorController.getDoctorSelect);
+    router.post('/api/create-doctor-markdown', doctorController.createDortorMarkdown);
+
+
 
     return app.use('/', router)
 }
