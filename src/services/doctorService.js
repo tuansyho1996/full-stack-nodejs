@@ -76,6 +76,39 @@ let handleCreateDoctorMarkdown = (inputData) => {
 
     })
 }
+let handleGetDetailDoctor = (id) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            if (id) {
+                let user = await db.User.findOne({
+                    where: { id: id },
+                    attributes: {
+                        exclude: ['password']
+                    },
+                    include: [
+                        { model: db.Markdown }
+                    ],
+                    raw: true,
+                    nest: true
+                })
+                resovle({
+                    errorCode: 0,
+                    message: 'ok',
+                    user: user
+                })
+            }
+            else {
+                resovle({
+                    errorCode: 1,
+                    message: 'Missing params id',
+                })
+            }
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
 module.exports = {
-    handleGetTopDoctorHomepage, handleFetchDoctorSelect, handleCreateDoctorMarkdown
+    handleGetTopDoctorHomepage, handleFetchDoctorSelect, handleCreateDoctorMarkdown, handleGetDetailDoctor
 }

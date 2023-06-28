@@ -26,6 +26,8 @@ let initWebRoutes = (app) => {
     router.get('/api/get-top-doctor-homepage', doctorController.getTopDoctorHomepage);
     router.get('/api/get-doctor-select', doctorController.getDoctorSelect);
     router.post('/api/create-doctor-markdown', doctorController.createDortorMarkdown);
+    router.get('/api/fetch-a-user/:id', doctorController.getDetailDoctor);
+
 
 
 

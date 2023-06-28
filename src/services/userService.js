@@ -167,10 +167,12 @@ let handleDeleteUser = (id) => {
         }
     })
 }
+
 module.exports = {
     handleLoginUser,
     handleGetUser,
     handleCreateNewUser,
     handleEditUser,
-    handleDeleteUser
+    handleDeleteUser,
+    
 }
