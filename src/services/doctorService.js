@@ -1,4 +1,5 @@
 import db from '../models/index.js'
+import _ from 'lodash';
 
 let handleGetTopDoctorHomepage = (limitInput) => {
     return new Promise(async (resolve, reject) => {
@@ -36,6 +37,11 @@ let handleFetchDoctorSelect = () => {
                 attributes: {
                     exclude: ['password', 'image']
                 },
+                include: [
+                    { model: db.Markdown }
+                ],
+                raw: true,
+                nest: true
             })
             resolve({
                 errorCode: 0,
@@ -58,16 +64,37 @@ let handleCreateDoctorMarkdown = (inputData) => {
                 })
             }
             else {
-                let res = db.Markdown.create({
-                    contentHTML: inputData.contentHTML,
-                    contentMarkdown: inputData.contentMarkdown,
-                    doctorId: inputData.doctorId
-                })
-                resolve({
-                    errorCode: 0,
-                    message: 'ok',
-                    data: res
-                })
+                let findId = await db.Markdown.findOne({ where: { doctorId: inputData.doctorId } });
+                if (findId !== null) {
+                    let res = await db.Markdown.update({
+                        contentHTML: inputData.contentHTML,
+                        contentMarkdown: inputData.contentMarkdown,
+                        description: inputData.description
+                    }, {
+                        where: {
+                            doctorId: inputData.doctorId
+                        }
+                    });
+                    resolve({
+                        errorCode: 0,
+                        message: 'Update success',
+                        data: res
+                    })
+                }
+                else {
+
+                    let res = db.Markdown.create({
+                        contentHTML: inputData.contentHTML,
+                        contentMarkdown: inputData.contentMarkdown,
+                        doctorId: inputData.doctorId,
+                        description: inputData.description
+                    })
+                    resolve({
+                        errorCode: 0,
+                        message: 'Create Success',
+                        data: res
+                    })
+                }
             }
         }
         catch (e) {
