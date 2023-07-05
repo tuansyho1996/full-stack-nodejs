@@ -174,5 +174,4 @@ module.exports = {
     handleCreateNewUser,
     handleEditUser,
     handleDeleteUser,
-
 }

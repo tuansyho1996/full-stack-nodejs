@@ -9,24 +9,27 @@ let handlebulkCreateScheduleService = (data) => {
             if (data.arrSchedule && data.arrSchedule.length !== 0) {
                 let maxNumber = process.env.MAXNUMBER;
                 data.arrSchedule = data.arrSchedule.map(item => {
-                    item.maxNumber = maxNumber;
+                    item.maxNumber = parseInt(maxNumber);
+                    item.date = item.date.toString();
                     return item
                 })
+                console.log('check arr post', data.arrSchedule)
+
                 let existArrSchedule = await db.Schedule.findAll({
                     where: {
                         doctorId: data.arrSchedule[0].doctorId,
+                        date: data.arrSchedule[0].date
                     },
                     attributes: ['doctorId', 'date', 'timeType', 'maxNumber'],
                     raw: true
                 });
-                existArrSchedule = existArrSchedule.map(item => {
-                    item.date = Date.parse(item.date);
-                    return item
-                })
+
+                console.log('check arr exist ============================', existArrSchedule)
 
                 let toCreate = _.differenceWith(data.arrSchedule, existArrSchedule, (a, b) => {
                     return a.timeType === b.timeType && a.date === b.date
                 });
+                console.log('check arr to create', toCreate)
 
                 let res = await db.Schedule.bulkCreate(toCreate);
                 resolve({
@@ -47,6 +50,31 @@ let handlebulkCreateScheduleService = (data) => {
         }
     })
 }
+let handleFetchScheduleDoctorService = (doctorId, date) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            let res = await db.Schedule.findAll({
+                where: {
+                    doctorId: doctorId,
+                    date: date
+                },
+                include: [
+                    { model: db.Allcode, as: 'timeData' },
+                ],
+                raw: true,
+                nest: true
+            })
+            resovle({
+                errorCode: 0,
+                message: 'ok',
+                data: res
+            })
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
 module.exports = {
-    handlebulkCreateScheduleService,
+    handlebulkCreateScheduleService, handleFetchScheduleDoctorService
 }
