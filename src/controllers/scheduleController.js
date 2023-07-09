@@ -34,6 +34,7 @@ let fetchScheduleDoctor = async (req, res) => {
         })
     }
 }
+
 module.exports = {
-    bulkCreateSchedule, fetchScheduleDoctor
+    bulkCreateSchedule, fetchScheduleDoctor,
 }

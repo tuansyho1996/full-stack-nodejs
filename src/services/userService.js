@@ -17,7 +17,6 @@ let handleLoginUser = (email, password) => {
                     where: { email: email },
                     attributes: ['email', 'password', 'roleId', 'firstName', 'lastName'],
                     raw: true
-
                 });
                 if (!user) {
                     userData.errorCode = 1;

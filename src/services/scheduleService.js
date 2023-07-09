@@ -13,7 +13,6 @@ let handlebulkCreateScheduleService = (data) => {
                     item.date = item.date.toString();
                     return item
                 })
-                console.log('check arr post', data.arrSchedule)
 
                 let existArrSchedule = await db.Schedule.findAll({
                     where: {
@@ -24,12 +23,10 @@ let handlebulkCreateScheduleService = (data) => {
                     raw: true
                 });
 
-                console.log('check arr exist ============================', existArrSchedule)
 
                 let toCreate = _.differenceWith(data.arrSchedule, existArrSchedule, (a, b) => {
                     return a.timeType === b.timeType && a.date === b.date
                 });
-                console.log('check arr to create', toCreate)
 
                 let res = await db.Schedule.bulkCreate(toCreate);
                 resolve({
@@ -75,6 +72,30 @@ let handleFetchScheduleDoctorService = (doctorId, date) => {
         }
     })
 }
+let createInfoDoctorService = (data) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            let res = await db.InfoDoctor.create({
+                doctorId: data.doctorId,
+                priceId: data.priceId,
+                provinceId: data.provinceId,
+                paymentId: data.paymentId,
+                nameClinic: data.nameClinic,
+                addressClinic: data.addressClinic,
+                note: data.note
+            })
+            resovle({
+                errorCode: 0,
+                message: 'ok',
+                data: res
+            })
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     handlebulkCreateScheduleService, handleFetchScheduleDoctorService
 }

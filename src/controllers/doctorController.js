@@ -45,8 +45,8 @@ let getDetailDoctor = async (req, res) => {
         console.log(e)
     }
 }
+let fetchPriceDoctorSelect =
 
-
-module.exports = {
-    getTopDoctorHomepage, getDoctorSelect, createDortorMarkdown, getDetailDoctor
-}
+    module.exports = {
+        getTopDoctorHomepage, getDoctorSelect, createDortorMarkdown, getDetailDoctor
+    }

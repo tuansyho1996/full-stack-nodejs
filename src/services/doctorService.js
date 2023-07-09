@@ -38,7 +38,8 @@ let handleFetchDoctorSelect = () => {
                     exclude: ['password', 'image']
                 },
                 include: [
-                    { model: db.Markdown }
+                    { model: db.InfoDoctor },
+                    { model: db.Markdown },
                 ],
                 raw: true,
                 nest: true
@@ -113,7 +114,8 @@ let handleGetDetailDoctor = (id) => {
                         exclude: ['password']
                     },
                     include: [
-                        { model: db.Markdown }
+                        { model: db.Markdown },
+                        { model: db.InfoDoctor }
                     ],
                     raw: true,
                     nest: true
