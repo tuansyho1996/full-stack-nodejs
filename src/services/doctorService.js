@@ -115,7 +115,6 @@ let handleGetDetailDoctor = (id) => {
                     },
                     include: [
                         { model: db.Markdown },
-                        { model: db.InfoDoctor }
                     ],
                     raw: true,
                     nest: true

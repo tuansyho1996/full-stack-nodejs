@@ -48,7 +48,32 @@ let handleCreateInfoDoctorService = (data) => {
         }
     })
 }
+let handleFetchInfoDoctorService = (id) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            let res = await db.InfoDoctor.findOne({
+                where: { doctorId: id },
+                include: [
+                    { model: db.Allcode, as: 'priceData', attributes: ['valueEn', 'valueVi'] },
+                    { model: db.Allcode, as: 'provinceData', attributes: ['valueEn', 'valueVi'] },
+                    { model: db.Allcode, as: 'paymentData', attributes: ['valueEn', 'valueVi'] },
+                ],
+                raw: true,
+                nest: true
+            });
+            resovle({
+                errorCode: 0,
+                message: 'ok',
+                user: res
+            })
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
+
 
 module.exports = {
-    handleCreateInfoDoctorService
+    handleCreateInfoDoctorService, handleFetchInfoDoctorService
 }
