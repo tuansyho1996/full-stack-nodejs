@@ -4,21 +4,19 @@ import _ from 'lodash'
 let handleCreateInfoDoctorService = (data) => {
     return new Promise(async (resovle, reject) => {
         try {
-            let isInfo = await db.InfoDoctor.findAll({
+            let isInfo = await db.InfoDoctor.findOne({
                 where: { doctorId: data.doctorId }
             })
-            if (isInfo) {
-                let res = await db.InfoDoctor.update({
+            if (!isInfo) {
+                let res = await db.InfoDoctor.create({
+                    doctorId: data.doctorId,
                     priceId: data.priceId,
                     provinceId: data.provinceId,
                     paymentId: data.paymentId,
                     nameClinic: data.nameClinic,
                     addressClinic: data.addressClinic,
-                    note: data.note
-                }, {
-                    where: {
-                        doctorId: data.doctorId,
-                    }
+                    note: data.note,
+                    specialtyId: data.specialtyId
                 })
                 resovle({
                     errorCode: 0,
@@ -27,14 +25,18 @@ let handleCreateInfoDoctorService = (data) => {
                 })
             }
             else {
-                let res = await db.InfoDoctor.create({
-                    doctorId: data.doctorId,
+                let res = await db.InfoDoctor.update({
                     priceId: data.priceId,
                     provinceId: data.provinceId,
                     paymentId: data.paymentId,
                     nameClinic: data.nameClinic,
                     addressClinic: data.addressClinic,
-                    note: data.note
+                    note: data.note,
+                    specialtyId: data.specialtyId
+                }, {
+                    where: {
+                        doctorId: data.doctorId,
+                    }
                 })
                 resovle({
                     errorCode: 0,

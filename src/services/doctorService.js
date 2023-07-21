@@ -83,7 +83,6 @@ let handleCreateDoctorMarkdown = (inputData) => {
                     })
                 }
                 else {
-
                     let res = db.Markdown.create({
                         contentHTML: inputData.contentHTML,
                         contentMarkdown: inputData.contentMarkdown,
