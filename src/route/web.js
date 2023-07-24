@@ -41,6 +41,8 @@ let initWebRoutes = (app) => {
     router.post('/api/create-specialty', specialtyController.createSpecialty);
     router.get('/api/fetch-specialty', specialtyController.fetchSpecialty);
     router.get('/api/fetch-specialty-select', specialtyController.fetchSpecialtySelect);
+    router.get('/api/fetch-list-doctor-specialty', doctorController.fetchListDoctorSpecialty);
+
 
 
     return app.use('/', router)

@@ -136,6 +136,41 @@ let handleGetDetailDoctor = (id) => {
         }
     })
 }
+let handlefetchListDoctorSpecialty = (specialtyId) => {
+    return new Promise(async (resovle, reject) => {
+        try {
+            let listDoctorSpecialtyId = await db.InfoDoctor.findAll({
+                where: { specialtyId: specialtyId },
+                attributes: ['doctorId']
+            });
+            let arrListId = []
+            listDoctorSpecialtyId.map(item => {
+                arrListId.push(item.doctorId)
+            })
+            let listDoctor = await db.User.findAll({
+                where: { id: arrListId },
+                attributes: {
+                    exclude: ['password']
+                },
+                include: [
+                    { model: db.Markdown },
+                ],
+                raw: true,
+                nest: true
+            })
+
+            resovle({
+                errorCode: 0,
+                data: listDoctor
+            })
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
-    handleGetTopDoctorHomepage, handleFetchDoctorSelect, handleCreateDoctorMarkdown, handleGetDetailDoctor
+    handleGetTopDoctorHomepage, handleFetchDoctorSelect, handleCreateDoctorMarkdown,
+    handleGetDetailDoctor, handlefetchListDoctorSpecialty
 }

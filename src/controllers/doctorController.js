@@ -1,6 +1,7 @@
 import {
     handleGetTopDoctorHomepage, handleFetchDoctorSelect,
-    handleCreateDoctorMarkdown, handleGetDetailDoctor
+    handleCreateDoctorMarkdown, handleGetDetailDoctor,
+    handlefetchListDoctorSpecialty
 } from '../services/doctorService';
 let getTopDoctorHomepage = async (req, res) => {
     try {
@@ -45,8 +46,19 @@ let getDetailDoctor = async (req, res) => {
         console.log(e)
     }
 }
+let fetchListDoctorSpecialty = async (req, res) => {
+    try {
+        let responsive = await handlefetchListDoctorSpecialty(req.query.specialtyId);
+        return res.status(200).json(responsive);
+    }
+    catch (e) {
+        console.log(e)
+    }
+}
+
 let fetchPriceDoctorSelect =
 
     module.exports = {
-        getTopDoctorHomepage, getDoctorSelect, createDortorMarkdown, getDetailDoctor
+        getTopDoctorHomepage, getDoctorSelect, createDortorMarkdown, getDetailDoctor,
+        fetchListDoctorSpecialty
     }
